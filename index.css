@@ -1,0 +1,11 @@
+#DivWrapper {
+    text-align: center;
+}
+
+#MainCanvas {
+    width: 800px;
+    height: 600px;
+    display: inline-block;
+    border: 3px solid black;
+    background-color: rgb(127,127,127);
+}
