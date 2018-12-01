@@ -9,16 +9,16 @@ function InputKeyDown(event) {
     //alert("down " + key + " | " + 'w');
     //TODO: make WASD keys work
     switch (key) {
-        case 'w'.charCodeAt(0): case 38: // up arrow
+        case 'W'.charCodeAt(0): case 38: // up arrow
             InputHandler.Up = true;
             break;
-        case 'a'.charCodeAt(0): case 37: // left arrow
+        case 'A'.charCodeAt(0): case 37: // left arrow
             InputHandler.Left = true;
             break;
-        case 's'.charCodeAt(0): case 40: //down arrow
+        case 'S'.charCodeAt(0): case 40: //down arrow
             InputHandler.Down = true;
             break;
-        case 'd'.charCodeAt(0): case 39: // right arrow
+        case 'D'.charCodeAt(0): case 39: // right arrow
             InputHandler.Right = true;
             break;
     }
@@ -28,16 +28,16 @@ function InputKeyUp(event) {
     let key = event.which || event.keyCode;
     //alert("up " + key);
     switch (key) {
-        case "w".charCodeAt(0): case 38: // up arrow
+        case 'W'.charCodeAt(0): case 38: // up arrow
             InputHandler.Up = false;
             break;
-        case "a".charCodeAt(0): case 37: // left arrow
+        case 'A'.charCodeAt(0): case 37: // left arrow
             InputHandler.Left = false;
             break;
-        case "s".charCodeAt(0): case 40: //down arrow
+        case 'S'.charCodeAt(0): case 40: //down arrow
             InputHandler.Down = false;
             break;
-        case "d".charCodeAt(0): case 39: // right arrow
+        case 'D'.charCodeAt(0): case 39: // right arrow
             InputHandler.Right = false;
             break;
     }
