@@ -104,7 +104,10 @@ function AddSquare() {
     Sqr.y = Math.round(Math.random() * (600 - 26));
     Sqr.w = 25;
     Sqr.h = 25;
-    Sqr.color = "#FF0000";
+    let R = Math.random() * 255;
+    let G = Math.random() * 255;
+    let B = Math.random() * 255;
+    Sqr.color = RGBtoHex(R,G,B);
     Sqr.border = 1;
     RendObjs.push(Sqr);
 }
@@ -116,6 +119,5 @@ function RGBtoHex(r, g, b) {
     let Str = "#" + ((r > 15) ? r.toString(16) : ("0" + r.toString(16))) +
         ((g > 15) ? g.toString(16) : ("0" + g.toString(16))) +
         ((b > 15) ? b.toString(16) : ("0" + b.toString(16)));
-    alert(Str);
     return Str;
 }
