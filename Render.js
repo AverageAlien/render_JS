@@ -55,6 +55,8 @@ let _Square = {
     y: 0,
     w: 0,
     h: 0,
+    speed_x: 0,
+    speed_y: 0,
     color: "#000000",
     border: 0,
 };
@@ -67,20 +69,53 @@ Player.x = 0;
 Player.y = 0;
 Player.w = 15;
 Player.h = 15;
+Player.speed_x = 0;
+Player.speed_y = 0;
 Player.color = "#00ff00";
 Player.border = 2;
 RendObjs.push(Player);
 
-let Speed = 1;
+let Speed = 0.25;
+let Drag = 0.1;
+let Gravity = 1;
+let JumpBoost = 3;
 
-const Framerate = 16.667;
+const Field_X = 800;
+const Field_Y = 600;
+
+const RenderFramerate = 16.667;
+const PhysicsFramerate = 16.667;
 let FTime = new Date().getTime();
 
-setInterval(Update, Framerate);
+setInterval(PhysicsUpdate, PhysicsFramerate)
+setInterval(RenderUpdate, RenderFramerate);
 
-function Update() {
-    Player.x += InputHandler.Right ? Speed : InputHandler.Left ? -Speed : 0;
-    Player.y += InputHandler.Down ? Speed : InputHandler.Up ? -Speed : 0;
+function PhysicsUpdate() {
+    Player.speed_x += InputHandler.Right ? Speed : InputHandler.Left ? -Speed : 0;
+    Player.speed_y += InputHandler.Down ? Speed : InputHandler.Up ? -Speed : 0;
+    Player.speed_y += Gravity;
+    Player.speed_x *= 1 - Drag;
+    Player.speed_y *= 1 - Drag;
+    Player.x = Math.max(0, Math.min(Field_X - Player.w, Player.x + Player.speed_x));
+    Player.y = Math.max(0, Math.min(Field_Y - Player.h, Player.y + Player.speed_y));
+    if (Player.x >= Field_X - Player.w) Player.speed_x = Math.min(0, Player.speed_x);
+    else if (Player.x <= 0) Player.speed_x = Math.max(0, Player.speed_x);
+    if (Player.y >= Field_Y - Player.h) Player.speed_y = Math.min(0, Player.speed_y);
+    else if (Player.y <= 0) Player.speed_y = Math.max(0, Player.speed_y);
+    for (let i = 1; i < RendObjs.length; ++i) {
+        if (RendObjs[i].x <= 0 || RendObjs[i].x >= (800-RendObjs[i].w)) {
+            RendObjs[i].speed_x *= -1;
+        }
+        if (RendObjs[i].y <= 0 || RendObjs[i].y >= (600-RendObjs[i].h)) {
+            RendObjs[i].speed_y *= -1;
+        }
+        RendObjs[i].x += RendObjs[i].speed_x;
+        RendObjs[i].y += RendObjs[i].speed_y;
+    }
+}
+
+
+function RenderUpdate() {
     Ctx.clearRect(0, 0, Canvas.width, Canvas.height);
     for (let i = 0; i < RendObjs.length; ++i) {
         Ctx.fillStyle = "#000000";
@@ -104,6 +139,8 @@ function AddSquare() {
     Sqr.y = Math.round(Math.random() * (600 - 26));
     Sqr.w = 25;
     Sqr.h = 25;
+    Sqr.speed_x = 3;
+    Sqr.speed_y = 3;
     let R = Math.random() * 255;
     let G = Math.random() * 255;
     let B = Math.random() * 255;
